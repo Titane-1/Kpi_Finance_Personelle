@@ -187,18 +187,45 @@
             </div>
         </div>
     </div>
-
     <div id="budget" class="tab-content">
         <div class="panel">
             <h2>💰 Budgéter tes charges réelles</h2>
-            <h3 style="color:var(--text-muted);">Charges Courantes</h3>
-            <div class="control-group"><label>Loyer / Prêt Immo (€)</label><input type="number" id="exp_loyer" placeholder="Ex: 800"></div>
-            <div class="control-group"><label>Factures (Eau, Elec, Internet) (€)</label><input type="number" id="exp_factures" placeholder="Ex: 150"></div>
-            <div class="control-group"><label>Courses & Alimentation</label><input type="number" id="exp_courses" placeholder="Ex: 500"></div>
-            <h3 style="margin-top:1.5rem; color:var(--text-muted);">Investissements Complémentaires</h3>
-            <div class="control-group" style="border-left: 3px solid var(--accent-purple);"><label>Virement manuel vers PEA / Épargne Libre (€)</label><input type="number" id="inv_pea" placeholder="Ex: 300"></div>
             
-            <button class="btn-save" onclick="saveBudget()">💾 Enregistrer les DÉPENSES de ce mois</button>
+            <h3 style="color:var(--text-muted); border-bottom:1px solid #3f3f46; padding-bottom:5px;">🏠 Logement & Énergie</h3>
+            <div style="display:grid; grid-template-columns:1fr 1fr; gap:10px;">
+                <div class="control-group"><label>Loyer / Prêt Immo (€)</label><input type="number" id="exp_loyer" placeholder="Ex: 800"></div>
+                <div class="control-group"><label>Électricité & Gaz (€)</label><input type="number" id="exp_elec" placeholder="Ex: 80"></div>
+                <div class="control-group"><label>Eau & Ordures (€)</label><input type="number" id="exp_eau" placeholder="Ex: 30"></div>
+                <div class="control-group"><label>Assurance Habitation (€)</label><input type="number" id="exp_ass_hab" placeholder="Ex: 20"></div>
+            </div>
+
+            <h3 style="color:var(--text-muted); border-bottom:1px solid #3f3f46; padding-bottom:5px; margin-top:1.5rem;">🛒 Quotidien & Alimentation</h3>
+            <div style="display:grid; grid-template-columns:1fr 1fr; gap:10px;">
+                <div class="control-group"><label>Courses (Supermarché) (€)</label><input type="number" id="exp_courses" placeholder="Ex: 400"></div>
+                <div class="control-group"><label>Restos & Sorties (€)</label><input type="number" id="exp_restos" placeholder="Ex: 150"></div>
+            </div>
+
+            <h3 style="color:var(--text-muted); border-bottom:1px solid #3f3f46; padding-bottom:5px; margin-top:1.5rem;">🚗 Mobilité & Abonnements</h3>
+            <div style="display:grid; grid-template-columns:1fr 1fr; gap:10px;">
+                <div class="control-group"><label>Essence / Péage / Transport (€)</label><input type="number" id="exp_transport" placeholder="Ex: 120"></div>
+                <div class="control-group"><label>Assurance Auto/Moto (€)</label><input type="number" id="exp_ass_auto" placeholder="Ex: 50"></div>
+                <div class="control-group"><label>Internet & Téléphone (€)</label><input type="number" id="exp_telecom" placeholder="Ex: 40"></div>
+                <div class="control-group"><label>Netflix/Spotify/Salle de sport (€)</label><input type="number" id="exp_abo" placeholder="Ex: 30"></div>
+            </div>
+
+            <h3 style="color:var(--accent-pink); border-bottom:1px solid var(--accent-pink); padding-bottom:5px; margin-top:1.5rem;">💳 Dettes & Crédits (Hors Immo)</h3>
+            <div style="display:grid; grid-template-columns:1fr 1fr; gap:10px;">
+                <div class="control-group" style="border-left:3px solid var(--accent-pink);"><label>Crédit Conso 1 (€)</label><input type="number" id="dette_1" placeholder="Ex: 150"></div>
+                <div class="control-group" style="border-left:3px solid var(--accent-pink);"><label>Crédit Auto / Autre dette (€)</label><input type="number" id="dette_2" placeholder="Ex: 0"></div>
+            </div>
+
+            <h3 style="color:var(--accent-purple); border-bottom:1px solid var(--accent-purple); padding-bottom:5px; margin-top:1.5rem;">📈 Investissements & Épargne (Virements Manuels)</h3>
+            <div style="display:grid; grid-template-columns:1fr 1fr; gap:10px;">
+                <div class="control-group" style="border-left:3px solid var(--accent-purple);"><label>Bourse (PEA / CTO) (€)</label><input type="number" id="inv_bourse" placeholder="Ex: 300"></div>
+                <div class="control-group" style="border-left:3px solid var(--accent-purple);"><label>Crypto / Livret A / Autre (€)</label><input type="number" id="inv_crypto" placeholder="Ex: 100"></div>
+            </div>
+            
+            <button class="btn-save" onclick="saveBudget()" style="margin-top:2rem;">💾 Enregistrer les DÉPENSES & INVESTISSEMENTS</button>
         </div>
     </div>
 
@@ -211,20 +238,33 @@
                     <select id="dash_filter" onchange="renderDashboard()" style="width:200px; margin:0;"><option value="all">Tout l'historique</option></select>
                 </div>
             </div>
-            <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; margin-bottom: 2rem;">
-                <div class="result-block rb-total" style="margin:0;"><div class="rb-header">Revenus Générés (CA ou Brut)</div><div class="rb-value" id="kpi_ca">0 €</div></div>
-                <div class="result-block rb-cash" style="margin:0;"><div class="rb-header">Pouvoir d'Achat Total</div><div class="rb-value" id="kpi_pa">0 €</div></div>
-                <div class="result-block rb-assets" style="margin:0; border-color:var(--accent-pink);"><div class="rb-header">Argent Investi (PEE + PEA)</div><div class="rb-value" id="kpi_invest" style="color:var(--accent-pink);">0 €</div></div>
+            
+            <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 1rem; margin-bottom: 2rem;">
+                <div class="result-block rb-cash" style="margin:0; padding:0.8rem;"><div class="rb-header" style="font-size:0.7rem;">Super Net + TR</div><div class="rb-value" id="kpi_pa" style="font-size:1.5rem;">0 €</div></div>
+                <div class="result-block" style="margin:0; padding:0.8rem; border-color:#ef4444;"><div class="rb-header" style="font-size:0.7rem;">Dépenses Vie</div><div class="rb-value" id="kpi_dep" style="font-size:1.5rem; color:#ef4444;">0 €</div></div>
+                <div class="result-block" style="margin:0; padding:0.8rem; border-color:var(--accent-pink);"><div class="rb-header" style="font-size:0.7rem;">Remboursement Dettes</div><div class="rb-value" id="kpi_dette" style="font-size:1.5rem; color:var(--accent-pink);">0 €</div></div>
+                <div class="result-block rb-assets" style="margin:0; padding:0.8rem; border-color:var(--accent-purple);"><div class="rb-header" style="font-size:0.7rem;">Argent Investi (Total)</div><div class="rb-value" id="kpi_invest" style="font-size:1.5rem; color:var(--accent-purple);">0 €</div></div>
             </div>
-            <table style="width: 100%; text-align: left; border-collapse: collapse; margin-bottom: 2rem; font-size:0.9rem;">
+            
+            <div style="text-align:center; margin-bottom: 1.5rem; background: var(--bg-card); padding: 1rem; border-radius:10px;">
+                <span style="font-size:1.2rem; font-weight:bold;">Taux d'Épargne Réel : </span>
+                <span id="kpi_taux_epargne" style="font-size:1.5rem; font-weight:900; color:var(--accent-blue);">0 %</span>
+            </div>
+
+            <table style="width: 100%; text-align: left; border-collapse: collapse; margin-bottom: 2rem; font-size:0.85rem;">
                 <thead>
                     <tr style="border-bottom: 2px solid #3f3f46; color:var(--text-muted);">
-                        <th style="padding: 10px;">Période</th><th style="padding: 10px;">Revenus</th><th style="padding: 10px;">Super Net</th>
-                        <th style="padding: 10px; color:var(--accent-green);">P. d'Achat</th><th style="padding: 10px; color:var(--accent-pink);">Investi</th><th style="padding: 10px; color:#ef4444;">Dépenses</th>
+                        <th style="padding: 10px;">Période</th>
+                        <th style="padding: 10px; color:white;">Cash (Super Net)</th>
+                        <th style="padding: 10px; color:var(--accent-green);">P. d'Achat Total</th>
+                        <th style="padding: 10px; color:#ef4444;">Sorties (Dép+Dettes)</th>
+                        <th style="padding: 10px; color:var(--accent-purple);">Investi (Perso)</th>
+                        <th style="padding: 10px; color:var(--accent-blue);">Reste en Banque</th>
                     </tr>
                 </thead>
                 <tbody id="dash_table_body"></tbody>
             </table>
+
             <div style="text-align: center; border-top: 1px solid #3f3f46; padding-top: 1.5rem;"><a href="/api/export" class="export-link">📥 Exporter la base globale (CSV)</a></div>
         </div>
     </div>
@@ -232,29 +272,17 @@
     <script>
         function switchTab(tabId) {
             try {
-                document.querySelectorAll('.tab-content').forEach(t => {
-                    t.style.display = 'none';
-                    t.classList.remove('active');
-                });
-                
+                document.querySelectorAll('.tab-content').forEach(t => { t.style.display = 'none'; t.classList.remove('active'); });
                 const targetTab = document.getElementById(tabId);
-                if (targetTab) {
-                    targetTab.style.display = 'flex';
-                    targetTab.classList.add('active');
-                }
-
+                if (targetTab) { targetTab.style.display = 'flex'; targetTab.classList.add('active'); }
                 const buttons = document.querySelectorAll('.os-nav button');
                 buttons.forEach(b => b.classList.remove('active'));
-                
                 if (tabId === 'simu' && buttons.length > 0) buttons[0].classList.add('active');
                 if (tabId === 'budget' && buttons.length > 1) buttons[1].classList.add('active');
                 if (tabId === 'bilan' && buttons.length > 2) buttons[2].classList.add('active');
-                
                 const zc = document.querySelector('.zoom-control');
                 if(zc) zc.style.display = tabId === 'simu' ? 'flex' : 'none';
-            } catch (err) {
-                console.error("Erreur navigation:", err);
-            }
+            } catch (err) { console.error("Erreur navigation:", err); }
         }
 
         document.getElementById('zoom-slider').addEventListener('input', e => {
@@ -395,9 +423,19 @@
                 month_year: document.getElementById('month_picker').value,
                 expenses: [
                     { category: 'depense', name: 'Loyer', amount: parseFloat(document.getElementById('exp_loyer').value) || 0 },
-                    { category: 'depense', name: 'Factures', amount: parseFloat(document.getElementById('exp_factures').value) || 0 },
+                    { category: 'depense', name: 'Électricité/Gaz', amount: parseFloat(document.getElementById('exp_elec').value) || 0 },
+                    { category: 'depense', name: 'Eau/Ordures', amount: parseFloat(document.getElementById('exp_eau').value) || 0 },
+                    { category: 'depense', name: 'Assurance Hab.', amount: parseFloat(document.getElementById('exp_ass_hab').value) || 0 },
                     { category: 'depense', name: 'Courses', amount: parseFloat(document.getElementById('exp_courses').value) || 0 },
-                    { category: 'investissement', name: 'PEA', amount: parseFloat(document.getElementById('inv_pea').value) || 0 }
+                    { category: 'depense', name: 'Restos/Sorties', amount: parseFloat(document.getElementById('exp_restos').value) || 0 },
+                    { category: 'depense', name: 'Transport', amount: parseFloat(document.getElementById('exp_transport').value) || 0 },
+                    { category: 'depense', name: 'Assurance Auto', amount: parseFloat(document.getElementById('exp_ass_auto').value) || 0 },
+                    { category: 'depense', name: 'Télécom', amount: parseFloat(document.getElementById('exp_telecom').value) || 0 },
+                    { category: 'depense', name: 'Abonnements', amount: parseFloat(document.getElementById('exp_abo').value) || 0 },
+                    { category: 'dette', name: 'Crédit Conso 1', amount: parseFloat(document.getElementById('dette_1').value) || 0 },
+                    { category: 'dette', name: 'Crédit 2', amount: parseFloat(document.getElementById('dette_2').value) || 0 },
+                    { category: 'investissement', name: 'Bourse', amount: parseFloat(document.getElementById('inv_bourse').value) || 0 },
+                    { category: 'investissement', name: 'Crypto/Autre', amount: parseFloat(document.getElementById('inv_crypto').value) || 0 }
                 ]
             };
             fetch('/api/save_budget', { method: 'POST', headers: {'Content-Type':'application/json'}, body: JSON.stringify(payload) })
@@ -408,27 +446,33 @@
 
         function onMonthChange() {
             const month = document.getElementById('month_picker').value;
-            
-            // Vidage manuel des champs
-            document.getElementById('exp_loyer').value = '';
-            document.getElementById('exp_factures').value = '';
-            document.getElementById('exp_courses').value = '';
-            document.getElementById('inv_pea').value = '';
+            const fields = ['exp_loyer', 'exp_elec', 'exp_eau', 'exp_ass_hab', 'exp_courses', 'exp_restos', 'exp_transport', 'exp_ass_auto', 'exp_telecom', 'exp_abo', 'dette_1', 'dette_2', 'inv_bourse', 'inv_crypto'];
+            fields.forEach(f => document.getElementById(f).value = '');
 
             fetch('/api/get_month/' + month)
             .then(r => { if(!r.ok) throw new Error("Mois non trouvé"); return r.json(); })
             .then(data => {
                 if(data.expenses) {
                     data.expenses.forEach(exp => {
-                        if(exp.name === 'Loyer' && exp.amount > 0) document.getElementById('exp_loyer').value = exp.amount;
-                        if(exp.name === 'Factures' && exp.amount > 0) document.getElementById('exp_factures').value = exp.amount;
-                        if(exp.name === 'Courses' && exp.amount > 0) document.getElementById('exp_courses').value = exp.amount;
-                        if(exp.name === 'PEA' && exp.amount > 0) document.getElementById('inv_pea').value = exp.amount;
+                        if(exp.amount > 0) {
+                            if(exp.name === 'Loyer') document.getElementById('exp_loyer').value = exp.amount;
+                            if(exp.name === 'Électricité/Gaz') document.getElementById('exp_elec').value = exp.amount;
+                            if(exp.name === 'Eau/Ordures') document.getElementById('exp_eau').value = exp.amount;
+                            if(exp.name === 'Assurance Hab.') document.getElementById('exp_ass_hab').value = exp.amount;
+                            if(exp.name === 'Courses') document.getElementById('exp_courses').value = exp.amount;
+                            if(exp.name === 'Restos/Sorties') document.getElementById('exp_restos').value = exp.amount;
+                            if(exp.name === 'Transport') document.getElementById('exp_transport').value = exp.amount;
+                            if(exp.name === 'Assurance Auto') document.getElementById('exp_ass_auto').value = exp.amount;
+                            if(exp.name === 'Télécom') document.getElementById('exp_telecom').value = exp.amount;
+                            if(exp.name === 'Abonnements') document.getElementById('exp_abo').value = exp.amount;
+                            if(exp.name === 'Crédit Conso 1') document.getElementById('dette_1').value = exp.amount;
+                            if(exp.name === 'Crédit 2') document.getElementById('dette_2').value = exp.amount;
+                            if(exp.name === 'Bourse') document.getElementById('inv_bourse').value = exp.amount;
+                            if(exp.name === 'Crypto/Autre') document.getElementById('inv_crypto').value = exp.amount;
+                        }
                     });
                 }
-            })
-            .catch(err => console.log("Pas de dépenses enregistrées pour ce mois ou API KO."));
-            
+            }).catch(err => console.log("Pas de dépenses enregistrées pour ce mois."));
             checkIfMonthSaved();
         }
 
@@ -441,15 +485,13 @@
                 buildFilterDropdown(); 
                 renderDashboard(); 
                 checkIfMonthSaved(); 
-            })
-            .catch(err => console.warn("Serveur Python probablement non mis à jour ou KO."));
+            }).catch(err => console.warn("Serveur Python probablement non mis à jour ou KO."));
         }
 
         function checkIfMonthSaved() {
             const currentMonth = document.getElementById('month_picker');
             const badge = document.getElementById('month_status_badge');
             if(!currentMonth || !badge) return;
-            
             const isSaved = historyData.some(row => row.month_year === currentMonth.value);
             if (isSaved) {
                 badge.innerText = "✅ Déjà enregistré";
@@ -465,7 +507,7 @@
         function buildFilterDropdown() {
             const select = document.getElementById('dash_filter');
             if(!select) return;
-            select.innerHTML = '<option value="all">Tout l\'historique</option>';
+            select.innerHTML = "<option value='all'>Tout l'historique</option>";
             let years = new Set();
             historyData.forEach(row => {
                 years.add(row.month_year.split('-')[0]);
@@ -482,24 +524,46 @@
             const filter = select.value;
             let filteredData = filter === 'all' ? historyData : historyData.filter(row => filter.startsWith('year_') ? row.month_year.startsWith(filter.replace('year_', '')) : row.month_year === filter.replace('month_', ''));
 
-            let sumCA = 0, sumPA = 0, sumInvest = 0;
+            let sumPA = 0, sumDep = 0, sumDette = 0, sumInvest = 0;
             tbody.innerHTML = '';
 
             filteredData.forEach(row => {
-                const totalInvestiLigne = row.pee + row.total_pea;
-                sumCA += row.ca; sumPA += row.pouvoir_achat_total; sumInvest += totalInvestiLigne;
+                const investPersoLigne = row.total_pea || 0;
+                const totalInvestiLigne = row.pee + investPersoLigne;
+                const depensesLigne = row.total_depenses || 0;
+                const dettesLigne = row.total_dettes || 0;
+                const totalSorties = depensesLigne + dettesLigne;
+                
+                // LE CALCUL MAGIQUE DE LA TRÉSORERIE (Reste en Banque)
+                const resteEnBanque = row.pouvoir_achat_total - totalSorties - investPersoLigne;
+                
+                sumPA += row.pouvoir_achat_total; 
+                sumDep += depensesLigne;
+                sumDette += dettesLigne;
+                sumInvest += totalInvestiLigne;
+                
                 tbody.innerHTML += `
                     <tr style="border-bottom: 1px solid rgba(255,255,255,0.05);">
                         <td style="padding: 12px; font-weight:bold;">${row.month_year}</td>
-                        <td style="padding: 12px;">${fmt(row.ca)}</td><td style="padding: 12px;">${fmt(row.super_net)}</td>
-                        <td style="padding: 12px; color:var(--accent-green); font-weight:bold;">${fmt(row.pouvoir_achat_total)}</td>
-                        <td style="padding: 12px; color:var(--accent-pink); font-weight:bold;">${fmt(totalInvestiLigne)}</td>
-                        <td style="padding: 12px; color:#ef4444;">${fmt(row.total_depenses)}</td>
+                        <td style="padding: 12px; color:white; font-weight:bold;">${fmt(row.super_net)}</td>
+                        <td style="padding: 12px; color:var(--accent-green);">${fmt(row.pouvoir_achat_total)}</td>
+                        <td style="padding: 12px; color:#ef4444; font-weight:bold;">${fmt(totalSorties)}</td>
+                        <td style="padding: 12px; color:var(--accent-purple);">${fmt(investPersoLigne)}</td>
+                        <td style="padding: 12px; color:var(--accent-blue); font-weight:bold; font-size:1.05rem;">${fmt(resteEnBanque)}</td>
                     </tr>`;
             });
-            document.getElementById('kpi_ca').innerText = fmt(sumCA);
             document.getElementById('kpi_pa').innerText = fmt(sumPA);
+            document.getElementById('kpi_dep').innerText = fmt(sumDep);
+            document.getElementById('kpi_dette').innerText = fmt(sumDette);
             document.getElementById('kpi_invest').innerText = fmt(sumInvest);
+
+            const totalRevenus = sumPA;
+            if(totalRevenus > 0) {
+                const tauxEpargne = (sumInvest / totalRevenus) * 100;
+                document.getElementById('kpi_taux_epargne').innerText = tauxEpargne.toFixed(1) + " %";
+            } else {
+                document.getElementById('kpi_taux_epargne').innerText = "0 %";
+            }
         }
 
         document.addEventListener("DOMContentLoaded", () => {
