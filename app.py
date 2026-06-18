@@ -33,8 +33,6 @@ def save_simu():
         month_year = data.get('month_year')
         conn = sqlite3.connect(DB_FILE)
         c = conn.cursor()
-        
-        # Sauvegarde uniquement la simulation. REPLACE INTO est 100% compatible.
         c.execute('''REPLACE INTO monthly_stats (month_year, ca, culture, pee, super_net, pouvoir_achat_total) 
                      VALUES (?, ?, ?, ?, ?, ?)''', 
                   (month_year, data.get('ca',0), data.get('culture',0), data.get('pee',0), data.get('super_net',0), data.get('pouvoir_achat_total',0)))
@@ -51,14 +49,10 @@ def save_budget():
         month_year = data.get('month_year')
         conn = sqlite3.connect(DB_FILE)
         c = conn.cursor()
-        
-        # Crée une ligne vide dans la simulation si elle n'existe pas pour lier les bases de données
         c.execute('INSERT OR IGNORE INTO monthly_stats (month_year, ca, culture, pee, super_net, pouvoir_achat_total) VALUES (?, 0, 0, 0, 0, 0)', (month_year,))
-        
-        # Remplace uniquement les dépenses
         c.execute('DELETE FROM expenses WHERE month_year = ?', (month_year,))
         for exp in data.get('expenses', []):
-            if exp['amount'] > 0: # Ne sauvegarde que si la case n'est pas vide
+            if exp['amount'] > 0:
                 c.execute('INSERT INTO expenses (month_year, category, name, amount) VALUES (?, ?, ?, ?)',
                           (month_year, exp['category'], exp['name'], exp['amount']))
         conn.commit()
@@ -85,7 +79,8 @@ def get_history():
     c.execute('''
         SELECT m.month_year, m.ca, m.super_net, m.pouvoir_achat_total, m.pee, 
                COALESCE(SUM(CASE WHEN e.category='investissement' THEN e.amount ELSE 0 END), 0) as total_pea,
-               COALESCE(SUM(CASE WHEN e.category='depense' THEN e.amount ELSE 0 END), 0) as total_depenses
+               COALESCE(SUM(CASE WHEN e.category='depense' THEN e.amount ELSE 0 END), 0) as total_depenses,
+               COALESCE(SUM(CASE WHEN e.category='dette' THEN e.amount ELSE 0 END), 0) as total_dettes
         FROM monthly_stats m
         LEFT JOIN expenses e ON m.month_year = e.month_year
         GROUP BY m.month_year ORDER BY m.month_year DESC
@@ -97,19 +92,28 @@ def get_history():
 @app.route('/api/export', methods=['GET'])
 def export_csv():
     conn = sqlite3.connect(DB_FILE)
+    conn.row_factory = sqlite3.Row
     c = conn.cursor()
     c.execute('''SELECT m.month_year, m.ca, m.super_net, m.pouvoir_achat_total, m.pee, 
                         COALESCE(SUM(CASE WHEN e.category='investissement' THEN e.amount ELSE 0 END), 0) as total_pea,
-                        COALESCE(SUM(CASE WHEN e.category='depense' THEN e.amount ELSE 0 END), 0) as total_depenses
+                        COALESCE(SUM(CASE WHEN e.category='depense' THEN e.amount ELSE 0 END), 0) as total_depenses,
+                        COALESCE(SUM(CASE WHEN e.category='dette' THEN e.amount ELSE 0 END), 0) as total_dettes
                  FROM monthly_stats m
                  LEFT JOIN expenses e ON m.month_year = e.month_year
                  GROUP BY m.month_year ORDER BY m.month_year DESC''')
     rows = c.fetchall()
     conn.close()
+
     output = io.StringIO()
     writer = csv.writer(output, delimiter=';')
-    writer.writerow(['Mois', 'Revenus (CA/Brut)', 'Cash Super Net', 'Pouvoir Achat Total', 'Investi PEE', 'Investi PEA', 'Dépenses Courantes'])
-    writer.writerows(rows)
+    writer.writerow(['Mois', 'CA / Brut', 'Super Net (Cash)', 'Pouvoir Achat Total', 'Total Sorties (Dép+Dettes)', 'Investi Perso', 'Investi PEE', 'Reste en Banque'])
+    
+    for r in rows:
+        row = dict(r)
+        total_sorties = row['total_depenses'] + row['total_dettes']
+        reste_en_banque = row['pouvoir_achat_total'] - total_sorties - row['total_pea']
+        writer.writerow([row['month_year'], row['ca'], row['super_net'], row['pouvoir_achat_total'], total_sorties, row['total_pea'], row['pee'], reste_en_banque])
+        
     return Response(output.getvalue(), mimetype="text/csv", headers={"Content-Disposition": "attachment;filename=export_portage_os.csv"})
 
 if __name__ == '__main__':
