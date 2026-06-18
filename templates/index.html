@@ -13,10 +13,7 @@
             --text-main: #f8fafc; --text-muted: #a1a1aa;
         }
         
-        /* CORRECTION CRUCIALE : Empêche les colonnes de se manger */
-        * {
-            box-sizing: border-box;
-        }
+        * { box-sizing: border-box; }
         
         body { margin: 0; font-family: 'Segoe UI', system-ui, sans-serif; background-color: var(--bg-base); color: var(--text-main); font-size: 0.85rem; padding: 1rem 0; overflow-x: hidden; }
         
@@ -27,39 +24,11 @@
         .tab-content { display: none; width: 100%; justify-content: center; }
         .tab-content.active { display: flex; }
 
-        /* --- SÉLECTEUR DE MOIS GLOBAL --- */
-        .global-month-bar {
-            display: flex;
-            justify-content: center;
-            margin-bottom: 1.5rem;
-            animation: fadeIn 0.3s ease-in-out;
-        }
-        .global-month-box {
-            background: var(--bg-panel);
-            padding: 0.6rem 1.2rem;
-            border-radius: 30px;
-            border: 1px solid rgba(59, 130, 246, 0.3);
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.3);
-        }
-        .global-month-box label {
-            font-weight: bold;
-            color: var(--accent-blue);
-            text-transform: uppercase;
-            font-size: 0.75rem;
-            letter-spacing: 0.5px;
-        }
-        .global-month-box input[type="month"] {
-            margin: 0;
-            width: auto;
-            padding: 5px 10px;
-            background: var(--bg-card);
-            border-radius: 20px;
-        }
+        .global-month-bar { display: flex; justify-content: center; margin-bottom: 1.5rem; animation: fadeIn 0.3s ease-in-out; }
+        .global-month-box { background: var(--bg-panel); padding: 0.6rem 1.2rem; border-radius: 30px; border: 1px solid rgba(59, 130, 246, 0.3); display: flex; align-items: center; gap: 12px; box-shadow: 0 4px 20px rgba(0,0,0,0.3); }
+        .global-month-box label { font-weight: bold; color: var(--accent-blue); text-transform: uppercase; font-size: 0.75rem; letter-spacing: 0.5px; }
+        .global-month-box input[type="month"] { margin: 0; width: auto; padding: 5px 10px; background: var(--bg-card); border-radius: 20px; }
 
-        /* --- CSS DU SIMULATEUR --- */
         .zoom-control { position: fixed; top: 15px; right: 20px; background: rgba(24, 24, 27, 0.9); backdrop-filter: blur(5px); padding: 8px 15px; border-radius: 20px; border: 1px solid rgba(255,255,255,0.1); display: flex; align-items: center; gap: 15px; z-index: 3000; }
         .zoom-control label { font-size: 0.75rem; color: var(--text-muted); text-transform: uppercase; font-weight: bold; }
         .zoom-control input[type=range] { width: 100px; margin: 0; }
@@ -76,65 +45,43 @@
         
         .control-group { background: var(--bg-card); padding: 0.8rem 1rem; border-radius: 10px; margin-bottom: 0.5rem; border: 1px solid transparent; }
         .control-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.5rem; font-weight: 500; }
-        .value-display { font-weight: 800; font-size: 1rem; }
         .value-display-small { font-size: 0.8rem; color: var(--text-muted); font-weight: normal; display: block; text-align: right; }
         
+        /* --- NOUVEAU : STYLE DES CHAMPS EDITABLES --- */
+        .val-input { width: 85px; background: rgba(0,0,0,0.2); border: 1px solid rgba(255,255,255,0.1); border-radius: 4px; color: white; font-weight: 800; font-size: 1rem; text-align: right; padding: 4px 8px; outline: none; transition: 0.2s; }
+        .val-input:focus { border-color: var(--accent-blue); background: rgba(0,0,0,0.5); }
+        .val-input::-webkit-outer-spin-button, .val-input::-webkit-inner-spin-button { -webkit-appearance: none; margin: 0; }
+
         input[type=range] { -webkit-appearance: none; width: 100%; background: transparent; margin-top: 5px; }
         input[type=range]::-webkit-slider-thumb { -webkit-appearance: none; height: 16px; width: 16px; border-radius: 50%; cursor: pointer; margin-top: -6px; background: white; }
         .blue input[type=range]::-webkit-slider-thumb { background: var(--accent-blue); box-shadow: 0 0 10px var(--accent-blue); } .green input[type=range]::-webkit-slider-thumb { background: var(--accent-green); box-shadow: 0 0 10px var(--accent-green); } .purple input[type=range]::-webkit-slider-thumb { background: var(--accent-purple); box-shadow: 0 0 10px var(--accent-purple); } .orange input[type=range]::-webkit-slider-thumb { background: var(--accent-orange); box-shadow: 0 0 10px var(--accent-orange); } .pink input[type=range]::-webkit-slider-thumb { background: var(--accent-pink); box-shadow: 0 0 10px var(--accent-pink); }
         input[type=range]::-webkit-slider-runnable-track { width: 100%; height: 4px; background: #3f3f46; border-radius: 2px; }
         
-        select, input[type="number"], input[type="month"], input[type="text"] { width: 100%; padding: 8px; background: #3f3f46; color: white; border: 1px solid rgba(255,255,255,0.1); border-radius: 6px; font-family: inherit; outline: none; margin-bottom: 5px; box-sizing: border-box; }
-        .info-text { font-size: 0.75rem; color: var(--text-muted); margin-top: 6px; display: flex; justify-content: space-between; }
+        select, input[type="number"]:not(.val-input), input[type="month"], input[type="text"] { width: 100%; padding: 8px; background: #3f3f46; color: white; border: 1px solid rgba(255,255,255,0.1); border-radius: 6px; font-family: inherit; outline: none; margin-bottom: 5px; box-sizing: border-box; }
         
         .result-block { background: var(--bg-card); padding: 1rem; border-radius: 10px; margin-bottom: 0.8rem; border-left: 4px solid transparent; }
         .rb-cash { border-color: var(--accent-green); } .rb-assets { border-color: var(--accent-purple); } .rb-total { background: linear-gradient(135deg, rgba(59, 130, 246, 0.1), rgba(139, 92, 246, 0.2)); border-color: var(--accent-blue); }
         .rb-header { font-size: 0.8rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 0.3rem; }
         .rb-value { font-size: 2rem; font-weight: 900; }
         .rb-cash .rb-value { color: var(--accent-green); } .rb-assets .rb-value { color: var(--accent-purple); }
-        
         .detail-row { display: flex; justify-content: space-between; font-size: 0.8rem; color: var(--text-muted); margin-top: 0.4rem; padding-top: 0.4rem; border-top: 1px dashed rgba(255,255,255,0.1); }
         
         .btn-save { background: var(--accent-green); color: #09090b; width: 100%; font-weight: 900; padding: 14px; margin-top: 1rem; border: none; border-radius: 10px; cursor: pointer; text-transform: uppercase; letter-spacing: 1px; transition: background 0.2s; box-shadow: 0 4px 15px rgba(16, 185, 129, 0.2); }
         .btn-save:hover { background: #0cbd7e; }
-        
         .export-link { color: var(--accent-blue); text-decoration: none; font-weight: bold; display: inline-block; padding: 10px; border: 1px solid var(--accent-blue); border-radius: 6px;}
 
-        /* --- TOAST NOTIFICATION MODERNE --- */
-        #toast-notification {
-            position: fixed;
-            bottom: -100px;
-            right: 20px;
-            background: #10b981;
-            color: #09090b;
-            padding: 16px 28px;
-            border-radius: 12px;
-            font-weight: 800;
-            font-size: 0.95rem;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.6), 0 0 15px rgba(16, 185, 129, 0.4);
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            z-index: 9999;
-            transition: bottom 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), opacity 0.3s;
-            opacity: 0;
-        }
-        #toast-notification.show {
-            bottom: 25px;
-            opacity: 1;
-        }
+        #toast-notification { position: fixed; bottom: -100px; right: 20px; background: #10b981; color: #09090b; padding: 16px 28px; border-radius: 12px; font-weight: 800; font-size: 0.95rem; box-shadow: 0 10px 25px rgba(0,0,0,0.6), 0 0 15px rgba(16, 185, 129, 0.4); display: flex; align-items: center; gap: 10px; z-index: 9999; transition: bottom 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), opacity 0.3s; opacity: 0; }
+        #toast-notification.show { bottom: 25px; opacity: 1; }
     </style>
 </head>
 <body>
 
-    <!-- NAVIGATION -->
     <nav class="os-nav">
         <button class="active" onclick="switchTab('simu')">1. Simulateur</button>
         <button onclick="switchTab('budget')">2. Budget & Investissements</button>
         <button onclick="switchTab('bilan')">3. Bilan & Export Excel</button>
     </nav>
 
-    <!-- NOUVEAU : MOIS DE TRAVAIL UNIQUE ET GLOBAL -->
     <div class="global-month-bar">
         <div class="global-month-box">
             <label>📅 Mois de simulation :</label>
@@ -142,91 +89,94 @@
         </div>
     </div>
 
-    <!-- ZOOM -->
     <div class="zoom-control">
         <label>🔍 Zoom</label>
         <input type="range" id="zoom-slider" min="0.6" max="1.2" step="0.05" value="0.8">
     </div>
 
-    <!-- TOAST POPUP (ALERT CONFIRMATION) -->
-    <div id="toast-notification">
-        <span>✅</span> <span id="toast-text">Mois figé avec succès !</span>
-    </div>
+    <div id="toast-notification"><span>✅</span> <span id="toast-text">Mois figé avec succès !</span></div>
 
-    <!-- ONGLET 1 : SIMULATEUR COMPLET -->
     <div id="simu" class="tab-content active">
         <div class="dashboard-wrapper" id="dashboard-wrapper">
             <div class="dashboard">
-                <!-- COLONNE GAUCHE -->
                 <div class="panel">
                     <h2>🎛️ Profil & Paramètres</h2>
 
-                    <!-- SELECTEUR DE STATUT -->
                     <div class="control-group" style="border: 2px solid var(--text-muted); margin-bottom: 1.5rem;">
-                        <div class="control-header">
-                            <span>Statut Professionnel</span>
-                        </div>
+                        <div class="control-header"><span>Statut Professionnel</span></div>
                         <select id="statut" onchange="toggleStatut()" style="font-weight: bold;">
                             <option value="portage" selected>Consultant (Portage Salarial)</option>
                             <option value="salarie">Salarié Classique (CDI/CDD)</option>
                         </select>
                     </div>
 
-                    <!-- BLOCS SALARIÉ -->
                     <div class="section-title blue salarie-only" style="display:none;">1. Rémunération</div>
                     <div class="control-group blue salarie-only" style="display:none;">
-                        <div class="control-header"><span>Salaire Mensuel Brut</span><span class="value-display" id="val-salaire-brut">3000 €</span></div>
+                        <div class="control-header"><span>Salaire Mensuel Brut</span><div style="display:flex; align-items:center; gap:5px;"><input type="number" id="salaire-brut_input" class="val-input" value="3000"> €</div></div>
                         <input type="range" id="salaire-brut" min="1500" max="10000" step="50" value="3000">
                     </div>
 
-                    <!-- BLOCS PORTAGE -->
                     <div class="section-title blue portage-only">1. Facturation & CA</div>
                     <div class="control-group blue portage-only">
-                        <div class="control-header"><span>Chiffre d'Affaires HT</span><span class="value-display" id="val-ca">7400 €</span></div>
-                        <input type="range" id="ca" min="3000" max="15000" step="100" value="7400">
+                        <div class="control-header"><span>Chiffre d'Affaires HT</span><div style="display:flex; align-items:center; gap:5px;"><input type="number" id="ca_input" class="val-input" value="7400"> €</div></div>
+                        <input type="range" id="ca" min="0" max="25000" step="10" value="7400">
                     </div>
 
                     <div class="section-title orange portage-only">2. Matériel & Achats Pro</div>
                     <div class="control-group orange portage-only">
-                        <div class="control-header"><span>Achat Matériel (Défiscalisé)</span><span class="value-display" id="val-matos">0 €</span></div>
-                        <input type="range" id="matos" min="0" max="2000" step="50" value="0">
+                        <div class="control-header"><span>Achat Matériel (Défiscalisé)</span><div style="display:flex; align-items:center; gap:5px;"><input type="number" id="matos_input" class="val-input" value="0"> €</div></div>
+                        <input type="range" id="matos" min="0" max="3000" step="10" value="0">
                     </div>
 
-                    <!-- BLOCS COMMUNS -->
                     <div class="section-title pink">3. Chèques Culture / Avantages CE</div>
                     <div class="control-group pink">
-                        <div class="control-header"><span>Budget Mensuel</span><span class="value-display" id="val-culture">250 €</span></div>
-                        <input type="range" id="culture" min="0" max="1000" step="50" value="250">
+                        <div class="control-header"><span>Budget Mensuel</span><div style="display:flex; align-items:center; gap:5px;"><input type="number" id="culture_input" class="val-input" value="250"> €</div></div>
+                        <input type="range" id="culture" min="0" max="1000" step="10" value="250">
                     </div>
 
                     <div class="section-title green">4. Repas & IK</div>
                     <div class="control-group green" style="display:flex; flex-direction: column; gap: 10px;">
                         <div style="display:flex; gap: 10px;">
-                            <div style="flex: 1;"><div class="control-header"><span>Jours (TR)</span><span class="value-display" id="val-tr">20</span></div><input type="range" id="tr" min="0" max="22" step="1" value="20"></div>
-                            <div style="flex: 1;"><div class="control-header"><span>Valeur TR (€)</span><span class="value-display" id="val-tr-montant">11.97 €</span></div><input type="range" id="tr-montant" min="8" max="15" step="0.01" value="11.97"></div>
+                            <div style="flex: 1;"><div class="control-header"><span>Jours (TR)</span><div style="display:flex; align-items:center; gap:5px;"><input type="number" id="tr_input" class="val-input" value="20" style="width:60px;"></div></div><input type="range" id="tr" min="0" max="22" step="1" value="20"></div>
+                            <div style="flex: 1;"><div class="control-header"><span>Valeur TR (€)</span><div style="display:flex; align-items:center; gap:5px;"><input type="number" id="tr-montant_input" class="val-input" value="11.97" step="0.01"></div></div><input type="range" id="tr-montant" min="5" max="20" step="0.01" value="11.97"></div>
                         </div>
                         <div style="display:flex; gap: 10px; margin-top: 5px;">
                             <div style="flex: 1;"><div class="control-header"><span>Puissance</span></div><select id="cv"><option value="4">4 CV</option><option value="7" selected>7+ CV</option></select></div>
-                            <div style="flex: 1;"><div class="control-header"><span>Km / mois pro</span><span class="value-display" id="val-km">400</span></div><input type="range" id="km" min="0" max="3000" step="50" value="400"></div>
+                            <div style="flex: 1;"><div class="control-header"><span>Km / mois pro</span><div style="display:flex; align-items:center; gap:5px;"><input type="number" id="km_input" class="val-input" value="400"></div></div><input type="range" id="km" min="0" max="3000" step="10" value="400"></div>
                         </div>
                     </div>
 
-                    <!-- BLOCS PORTAGE (SUITE) -->
                     <div class="section-title purple portage-only">5. Épargne Entreprise (PEE 300%)</div>
                     <div class="control-group purple portage-only">
-                        <div class="control-header"><span>Ton Versement Volontaire</span><div><span class="value-display" id="val-pee">103.03 €</span><span class="value-display-small" id="val-pee-total"></span></div></div>
-                        <input type="range" id="pee-volontaire" min="0" max="300" step="0.01" value="103.03">
+                        <div class="control-header"><span>Ton Versement Volontaire</span>
+                            <div style="display:flex; flex-direction:column; align-items:flex-end; gap:5px;">
+                                <div style="display:flex; align-items:center; gap:5px;"><input type="number" id="pee-volontaire_input" class="val-input" value="103.03" step="0.01"> €</div>
+                                <span class="value-display-small" id="val-pee-total"></span>
+                            </div>
+                        </div>
+                        <input type="range" id="pee-volontaire" min="0" max="500" step="1" value="103.03">
                     </div>
 
-                    <div class="section-title" style="color:#cbd5e1;">6. Foyer Fiscal (Impôts) <span class="portage-only">& Frais</span></div>
-                    <div class="control-group" style="border-color: rgba(255,255,255,0.1); display:flex; gap:10px;">
-                        <div style="flex:1"><label>Parts Fiscales</label><select id="parts"><option value="1" selected>1 part</option><option value="2">2 parts</option></select></div>
-                        <div style="flex:1" class="portage-only"><label>Frais Portage</label><select id="frais-type"><option value="fixed">Forfait fixe</option><option value="percent" selected>Pourcentage (%)</option></select></div>
+                    <div class="section-title" style="color:#cbd5e1;">6. Foyer Fiscal (Impôts)</div>
+                    <div class="control-group" style="border-color: rgba(255,255,255,0.1);">
+                        <div class="control-header">
+                            <label>Parts Fiscales</label>
+                            <select id="parts" style="width:100px;">
+                                <option value="1" selected>1 part</option><option value="1.5">1.5 part</option><option value="2">2 parts</option><option value="2.5">2.5 parts</option><option value="3">3 parts</option>
+                            </select>
+                        </div>
                     </div>
-                    <input type="range" id="frais-val" min="0" max="15" step="0.5" value="5" class="portage-only">
+
+                    <div class="section-title portage-only" style="color:#cbd5e1;">7. Frais de Portage</div>
+                    <div class="control-group portage-only" style="border-color: rgba(255,255,255,0.1);">
+                        <div class="control-header">
+                            <select id="frais-type" style="width:150px;"><option value="fixed">Forfait fixe (€)</option><option value="percent" selected>Pourcentage (%)</option></select>
+                            <div style="display:flex; align-items:center; gap:5px;"><input type="number" id="frais-val_input" class="val-input" value="5" step="0.1"></div>
+                        </div>
+                        <input type="range" id="frais-val" min="0" max="15" step="0.1" value="5">
+                    </div>
                 </div>
 
-                <!-- COLONNE DROITE -->
                 <div class="panel">
                     <h2>📊 Synthèse & Rentrées Financières</h2>
                     <div class="result-block rb-cash">
@@ -257,19 +207,15 @@
                         </div>
                     </div>
 
-                    <!-- AJOUT : BOUTON SAUVEGARDE DIRECTEMENT SUR L'ONGLET 1 -->
                     <button class="btn-save" onclick="saveMonth()">💾 Figer & Sauvegarder ce mois</button>
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- ONGLET 2 : DÉPENSES & INVESTISSEMENTS -->
     <div id="budget" class="tab-content">
         <div class="panel">
             <h2>💰 Budgéter tes charges réelles</h2>
-            <p style="color: var(--text-muted); margin-bottom: 1.5rem;">Remplis tes coûts réels. En sauvegardant, ils seront mis en corrélation avec tes gains calculés dans l'onglet simulateur.</p>
-            
             <h3 style="color:var(--text-muted);">Charges Courantes</h3>
             <div class="control-group"><label>Loyer / Prêt Immo (€)</label><input type="number" id="exp_loyer" value="800"></div>
             <div class="control-group"><label>Factures (Eau, Elec, Internet) (€)</label><input type="number" id="exp_factures" value="150"></div>
@@ -284,56 +230,35 @@
                 <input type="number" id="inv_pea" value="300">
             </div>
             
-            <!-- BOUTON DU COMPTE DU BUDGET AVEC NOTIFICATION TOAST -->
             <button class="btn-save" onclick="saveMonth()">💾 Figer et Sauvegarder ce mois</button>
         </div>
     </div>
 
-    <!-- ONGLET 3 : BILAN -->
     <div id="bilan" class="tab-content">
         <div class="panel" style="max-width: 1000px; width: 100%;">
             <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem;">
                 <h2>📈 Tableau de Bord Analytique</h2>
                 <div style="display:flex; gap:10px; align-items: center;">
                     <label style="color:var(--text-muted); font-weight:bold;">Période :</label>
-                    <select id="dash_filter" onchange="renderDashboard()" style="width:200px; margin:0;">
-                        <option value="all">Tout l'historique</option>
-                    </select>
+                    <select id="dash_filter" onchange="renderDashboard()" style="width:200px; margin:0;"><option value="all">Tout l'historique</option></select>
                 </div>
             </div>
 
-            <!-- KPIs -->
             <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; margin-bottom: 2rem;">
-                <div class="result-block rb-total" style="margin:0;">
-                    <div class="rb-header">Revenus Générés (CA ou Brut)</div>
-                    <div class="rb-value" id="kpi_ca">0 €</div>
-                </div>
-                <div class="result-block rb-cash" style="margin:0;">
-                    <div class="rb-header">Pouvoir d'Achat Total</div>
-                    <div class="rb-value" id="kpi_pa">0 €</div>
-                </div>
-                <div class="result-block rb-assets" style="margin:0; border-color:var(--accent-pink);">
-                    <div class="rb-header">Argent Investi (PEE + PEA)</div>
-                    <div class="rb-value" id="kpi_invest" style="color:var(--accent-pink);">0 €</div>
-                </div>
+                <div class="result-block rb-total" style="margin:0;"><div class="rb-header">Revenus Générés (CA ou Brut)</div><div class="rb-value" id="kpi_ca">0 €</div></div>
+                <div class="result-block rb-cash" style="margin:0;"><div class="rb-header">Pouvoir d'Achat Total</div><div class="rb-value" id="kpi_pa">0 €</div></div>
+                <div class="result-block rb-assets" style="margin:0; border-color:var(--accent-pink);"><div class="rb-header">Argent Investi (PEE + PEA)</div><div class="rb-value" id="kpi_invest" style="color:var(--accent-pink);">0 €</div></div>
             </div>
 
-            <!-- TABLEAU -->
             <table style="width: 100%; text-align: left; border-collapse: collapse; margin-bottom: 2rem; font-size:0.9rem;">
                 <thead>
                     <tr style="border-bottom: 2px solid #3f3f46; color:var(--text-muted);">
-                        <th style="padding: 10px;">Période</th>
-                        <th style="padding: 10px;">Revenus (CA/Brut)</th>
-                        <th style="padding: 10px;">Super Net (Cash)</th>
-                        <th style="padding: 10px; color:var(--accent-green);">Pouvoir d'Achat</th>
-                        <th style="padding: 10px; color:var(--accent-pink);">Investi (Total)</th>
-                        <th style="padding: 10px; color:#ef4444;">Dépenses</th>
+                        <th style="padding: 10px;">Période</th><th style="padding: 10px;">Revenus</th><th style="padding: 10px;">Super Net</th>
+                        <th style="padding: 10px; color:var(--accent-green);">P. d'Achat</th><th style="padding: 10px; color:var(--accent-pink);">Investi</th><th style="padding: 10px; color:#ef4444;">Dépenses</th>
                     </tr>
                 </thead>
-                <tbody id="dash_table_body">
-                </tbody>
+                <tbody id="dash_table_body"></tbody>
             </table>
-
             <div style="text-align: center; border-top: 1px solid #3f3f46; padding-top: 1.5rem;">
                 <a href="/api/export" class="export-link">📥 Exporter la base globale en Excel (CSV)</a>
             </div>
@@ -341,14 +266,16 @@
     </div>
 
     <script>
-        // Gestion des Onglets
         function switchTab(tabId) {
             document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
             document.querySelectorAll('.os-nav button').forEach(b => b.classList.remove('active'));
             document.getElementById(tabId).classList.add('active');
-            event.target.classList.add('active');
+            const buttons = document.querySelectorAll('.os-nav button');
+            if (tabId === 'simu') buttons[0].classList.add('active');
+            if (tabId === 'budget') buttons[1].classList.add('active');
+            if (tabId === 'bilan') buttons[2].classList.add('active');
             document.querySelector('.zoom-control').style.display = tabId === 'simu' ? 'flex' : 'none';
-            if(tabId === 'bilan') { loadHistory(); }
+            if (tabId === 'bilan') { loadHistory(); }
         }
 
         document.getElementById('zoom-slider').addEventListener('input', e => {
@@ -374,122 +301,107 @@
         }
 
         function calculer() {
-            const statut = document.getElementById('statut').value;
-            const culture = parseFloat(document.getElementById('culture').value) || 0;
-            const joursTr = parseInt(document.getElementById('tr').value) || 0;
-            const valeurTR = parseFloat(document.getElementById('tr-montant').value) || 0;
-            const km = parseFloat(document.getElementById('km').value) || 0;
-            const cv = parseInt(document.getElementById('cv').value) || 7;
-            const partsFiscales = parseFloat(document.getElementById('parts').value) || 1;
-            
-            const montantIK = calculerIK(km, cv); 
-            const coutSalarieTR = joursTr * (valeurTR * 0.40);
-            const pouvoirAchatTR = joursTr * valeurTR;
-            
-            document.getElementById('val-culture').innerText = fmt(culture);
-            document.getElementById('val-tr').innerText = joursTr;
-            document.getElementById('val-tr-montant').innerText = fmt(valeurTR);
-            document.getElementById('val-km').innerText = km;
-
-            let virementBancaire = 0;
-            let pouvoirAchatImmediat = 0;
-            let epargneEtActifs = 0;
-            let valeurTotaleCreate = 0;
-            let salaireNet = 0;
-            let baseRevenu = 0;
-
-            if (statut === 'portage') {
-                const ca = parseFloat(document.getElementById('ca').value) || 0;
-                const matos = parseFloat(document.getElementById('matos').value) || 0;
-                const fraisType = document.getElementById('frais-type').value;
-                const fraisVal = parseFloat(document.getElementById('frais-val').value) || 0;
-                const versementVolontaire = parseFloat(document.getElementById('pee-volontaire').value) || 0;
+            try {
+                const statut = document.getElementById('statut').value;
+                const culture = parseFloat(document.getElementById('culture_input').value) || 0;
+                const joursTr = parseInt(document.getElementById('tr_input').value) || 0;
+                const valeurTR = parseFloat(document.getElementById('tr-montant_input').value) || 0;
+                const km = parseFloat(document.getElementById('km_input').value) || 0;
+                const cv = parseInt(document.getElementById('cv').value) || 7;
+                const partsFiscales = parseFloat(document.getElementById('parts').value) || 1;
                 
-                baseRevenu = ca;
-                document.getElementById('val-ca').innerText = fmt(ca);
-                document.getElementById('val-matos').innerText = fmt(matos);
-
-                const abondement = versementVolontaire * 3; 
-                const placementPeeTotal = versementVolontaire + abondement;
-                document.getElementById('val-pee').innerText = fmt(versementVolontaire);
-                document.getElementById('val-pee-total').innerText = `(Total : ${fmt(placementPeeTotal)})`;
-
-                let commissionPortage = fraisType === 'percent' ? ca * (fraisVal / 100) : fraisVal;
-                const budgetBrut = ca - commissionPortage;
-                const coutEmployeurTR = joursTr * (valeurTR * 0.60);
-                const coutPeePourSociete = abondement * 1.10; 
-
-                let masseSalariale = Math.max(0, budgetBrut - matos - montantIK - coutEmployeurTR - coutPeePourSociete - culture);
-                const salaireBrut = masseSalariale / 1.45; 
-                salaireNet = salaireBrut * 0.78; 
+                const montantIK = calculerIK(km, cv); 
+                const coutSalarieTR = joursTr * (valeurTR * 0.40);
+                const pouvoirAchatTR = joursTr * valeurTR;
                 
-                const salaireNetFinal = salaireNet - coutSalarieTR - versementVolontaire;
-                virementBancaire = Math.max(0, salaireNetFinal + montantIK); 
-                pouvoirAchatImmediat = virementBancaire + pouvoirAchatTR + culture;
-                epargneEtActifs = placementPeeTotal + matos;
-                valeurTotaleCreate = pouvoirAchatImmediat + epargneEtActifs;
+                let virementBancaire = 0, pouvoirAchatImmediat = 0, epargneEtActifs = 0;
+                let valeurTotaleCreate = 0, salaireNet = 0, baseRevenu = 0;
 
-                document.getElementById('det-pee-total').innerText = fmt(placementPeeTotal);
-                document.getElementById('det-matos').innerText = fmt(matos);
+                if (statut === 'portage') {
+                    const ca = parseFloat(document.getElementById('ca_input').value) || 0;
+                    const matos = parseFloat(document.getElementById('matos_input').value) || 0;
+                    const fraisType = document.getElementById('frais-type').value;
+                    const fraisVal = parseFloat(document.getElementById('frais-val_input').value) || 0;
+                    const versementVolontaire = parseFloat(document.getElementById('pee-volontaire_input').value) || 0;
+                    
+                    baseRevenu = ca;
+                    const abondement = versementVolontaire * 3; 
+                    const placementPeeTotal = versementVolontaire + abondement;
+                    document.getElementById('val-pee-total').innerText = `(Total PEE : ${fmt(placementPeeTotal)})`;
+
+                    let commissionPortage = fraisType === 'percent' ? ca * (fraisVal / 100) : fraisVal;
+                    const budgetBrut = ca - commissionPortage;
+                    const coutEmployeurTR = joursTr * (valeurTR * 0.60);
+                    const coutPeePourSociete = abondement * 1.10; 
+
+                    let masseSalariale = Math.max(0, budgetBrut - matos - montantIK - coutEmployeurTR - coutPeePourSociete - culture);
+                    const salaireBrut = masseSalariale / 1.45; 
+                    salaireNet = salaireBrut * 0.78; 
+                    
+                    const salaireNetFinal = salaireNet - coutSalarieTR - versementVolontaire;
+                    virementBancaire = Math.max(0, salaireNetFinal + montantIK); 
+                    pouvoirAchatImmediat = virementBancaire + pouvoirAchatTR + culture;
+                    epargneEtActifs = placementPeeTotal + matos;
+                    valeurTotaleCreate = pouvoirAchatImmediat + epargneEtActifs;
+
+                    document.getElementById('det-pee-total').innerText = fmt(placementPeeTotal);
+                    document.getElementById('det-matos').innerText = fmt(matos);
+                    
+                    const rendementImmediat = ca > 0 ? (pouvoirAchatImmediat / ca) * 100 : 0;
+                    document.getElementById('res-rendement-pa').innerText = rendementImmediat.toFixed(1) + " %";
+
+                    GLOBALS.pee = placementPeeTotal;
+                } else {
+                    const salaireBrut = parseFloat(document.getElementById('salaire-brut_input').value) || 0;
+                    baseRevenu = salaireBrut;
+                    salaireNet = salaireBrut * 0.78;
+                    const salaireNetFinal = salaireNet - coutSalarieTR;
+                    
+                    virementBancaire = Math.max(0, salaireNetFinal + montantIK);
+                    pouvoirAchatImmediat = virementBancaire + pouvoirAchatTR + culture;
+                    valeurTotaleCreate = pouvoirAchatImmediat;
+                    epargneEtActifs = 0;
+                    GLOBALS.pee = 0;
+                }
+
+                // --- VRAI CALCUL DE L'IMPÔT (Tranches Officielles) ---
+                const revenuImposable = (salaireNet * 12) * 0.90; 
+                const qf = revenuImposable / partsFiscales;
+                let impotAnnuel = 0;
                 
-                const rendementImmediat = ca > 0 ? (pouvoirAchatImmediat / ca) * 100 : 0;
-                document.getElementById('res-rendement-pa').innerText = rendementImmediat.toFixed(1) + " %";
-
-                GLOBALS.pee = placementPeeTotal;
-            } else {
-                const salaireBrut = parseFloat(document.getElementById('salaire-brut').value) || 0;
-                baseRevenu = salaireBrut;
-                document.getElementById('val-salaire-brut').innerText = fmt(salaireBrut);
+                if (qf > 177106) { impotAnnuel += (qf - 177106) * 0.45; }
+                if (qf > 82341)  { impotAnnuel += (Math.min(qf, 177106) - 82341) * 0.41; }
+                if (qf > 28797)  { impotAnnuel += (Math.min(qf, 82341) - 28797) * 0.30; }
+                if (qf > 11294)  { impotAnnuel += (Math.min(qf, 28797) - 11294) * 0.11; }
                 
-                salaireNet = salaireBrut * 0.78;
-                const salaireNetFinal = 1 != 1 ? 0 : (salaireNet - coutSalarieTR);
+                const impotMensuel = Math.max(0, impotAnnuel * partsFiscales) / 12;
+                const tauxPas = salaireNet > 0 ? (impotMensuel / salaireNet) * 100 : 0;
                 
-                virementBancaire = Math.max(0, salaireNetFinal + montantIK);
-                pouvoirAchatImmediat = virementBancaire + pouvoirAchatTR + culture;
-                valeurTotaleCreate = pouvoirAchatImmediat;
-                epargneEtActifs = 0;
-                GLOBALS.pee = 0;
-            }
+                const superNet = virementBancaire - impotMensuel;
+                const pouvoirAchatTotalApresImpot = superNet + pouvoirAchatTR + culture;
 
-            const revenuImposable = (salaireNet * 12) * 0.90; 
-            const qf = revenuImposable / partsFiscales;
-            let impotAnnuel = 0;
-            if (qf > 29579) { impotAnnuel += (qf - 29579) * 0.30 + 1977.69; }
-            else if (qf > 11600) { impotAnnuel += (qf - 11600) * 0.11; }
-            const impotMensuel = Math.max(0, impotAnnuel * partsFiscales) / 12;
-            const tauxPas = salaireNet > 0 ? (impotMensuel / salaireNet) * 100 : 0;
-            
-            const superNet = virementBancaire - impotMensuel;
-            const pouvoirAchatTotalApresImpot = superNet + pouvoirAchatTR + culture;
+                GLOBALS.ca = baseRevenu;
+                GLOBALS.culture = culture;
+                GLOBALS.superNet = superNet;
+                GLOBALS.paTotal = pouvoirAchatTotalApresImpot;
 
-            GLOBALS.ca = baseRevenu;
-            GLOBALS.culture = culture;
-            GLOBALS.superNet = superNet;
-            GLOBALS.paTotal = pouvoirAchatTotalApresImpot;
-
-            document.getElementById('res-pa-immediat').innerText = fmt(pouvoirAchatImmediat);
-            document.getElementById('det-virement').innerText = fmt(virementBancaire);
-            document.getElementById('det-taux-pas').innerText = tauxPas.toFixed(1) + "%";
-            document.getElementById('det-ir').innerText = "- " + fmt(impotMensuel);
-            document.getElementById('det-supernet').innerText = fmt(superNet);
-            document.getElementById('det-pa-total').innerText = fmt(pouvoirAchatTotalApresImpot);
-            
-            if (document.getElementById('statut').value === 'portage') {
-                document.getElementById('res-epargne').innerText = fmt(epargneEtActifs);
-            }
-            document.getElementById('res-total').innerText = fmt(valeurTotaleCreate);
+                document.getElementById('res-pa-immediat').innerText = fmt(pouvoirAchatImmediat);
+                document.getElementById('det-virement').innerText = fmt(virementBancaire);
+                document.getElementById('det-taux-pas').innerText = tauxPas.toFixed(1) + "%";
+                document.getElementById('det-ir').innerText = "- " + fmt(impotMensuel);
+                document.getElementById('det-supernet').innerText = fmt(superNet);
+                document.getElementById('det-pa-total').innerText = fmt(pouvoirAchatTotalApresImpot);
+                
+                if (statut === 'portage') { document.getElementById('res-epargne').innerText = fmt(epargneEtActifs); }
+                document.getElementById('res-total').innerText = fmt(valeurTotaleCreate);
+            } catch (error) { console.error("Erreur calcul:", error); }
         }
 
-        // --- NOUVEAU NOTIFICATION INTERNE TOAST ---
         function triggerToast(message) {
             const toast = document.getElementById('toast-notification');
-            const toastText = document.getElementById('toast-text');
-            toastText.innerText = message;
+            document.getElementById('toast-text').innerText = message;
             toast.classList.add('show');
-            
-            setTimeout(() => {
-                toast.classList.remove('show');
-            }, 3500);
+            setTimeout(() => { toast.classList.remove('show'); }, 3500);
         }
 
         function saveMonth() {
@@ -503,49 +415,29 @@
                     { category: 'investissement', name: 'PEA', amount: parseFloat(document.getElementById('inv_pea').value) || 0 }
                 ]
             };
-            fetch('/api/save_month', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(payload)
-            }).then(r => r.json()).then(data => {
-                // Remplacement de l'alert moche par le toast élégant
-                triggerToast(data.message);
-            });
+            fetch('/api/save_month', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload) })
+            .then(r => r.json()).then(data => { triggerToast(data.message); });
         }
 
         let historyData = [];
-
         function loadHistory() {
-            fetch('/api/get_history')
-                .then(r => r.json())
-                .then(data => {
-                    historyData = data;
-                    buildFilterDropdown();
-                    renderDashboard();
-                });
+            fetch('/api/get_history').then(r => r.json()).then(data => { historyData = data; buildFilterDropdown(); renderDashboard(); });
         }
 
         function buildFilterDropdown() {
             const select = document.getElementById('dash_filter');
-            select.innerHTML = '<option value="all">Tout l'historique</option>';
+            select.innerHTML = '<option value="all">Tout l\'historique</option>';
             let years = new Set();
             historyData.forEach(row => {
-                const year = row.month_year.split('-')[0];
-                years.add(year);
+                years.add(row.month_year.split('-')[0]);
                 select.innerHTML += `<option value="month_${row.month_year}">Mois : ${row.month_year}</option>`;
             });
-            years.forEach(year => {
-                select.innerHTML += `<option value="year_${year}" style="font-weight:bold;">Année : ${year}</option>`;
-            });
+            years.forEach(year => { select.innerHTML += `<option value="year_${year}" style="font-weight:bold;">Année : ${year}</option>`; });
         }
 
         function renderDashboard() {
             const filter = document.getElementById('dash_filter').value;
-            let filteredData = [];
-
-            if (filter === 'all') { filteredData = historyData; }
-            else if (filter.startsWith('year_')) { filteredData = historyData.filter(row => row.month_year.startsWith(filter.replace('year_', ''))); }
-            else if (filter.startsWith('month_')) { filteredData = historyData.filter(row => row.month_year === filter.replace('month_', '')); }
+            let filteredData = filter === 'all' ? historyData : historyData.filter(row => filter.startsWith('year_') ? row.month_year.startsWith(filter.replace('year_', '')) : row.month_year === filter.replace('month_', ''));
 
             let sumCA = 0, sumPA = 0, sumInvest = 0;
             const tbody = document.getElementById('dash_table_body');
@@ -557,24 +449,34 @@
                 tbody.innerHTML += `
                     <tr style="border-bottom: 1px solid rgba(255,255,255,0.05);">
                         <td style="padding: 12px; font-weight:bold;">${row.month_year}</td>
-                        <td style="padding: 12px;">${fmt(row.ca)}</td>
-                        <td style="padding: 12px;">${fmt(row.super_net)}</td>
+                        <td style="padding: 12px;">${fmt(row.ca)}</td><td style="padding: 12px;">${fmt(row.super_net)}</td>
                         <td style="padding: 12px; color:var(--accent-green); font-weight:bold;">${fmt(row.pouvoir_achat_total)}</td>
                         <td style="padding: 12px; color:var(--accent-pink); font-weight:bold;">${fmt(totalInvestiLigne)}</td>
                         <td style="padding: 12px; color:#ef4444;">${fmt(row.total_depenses)}</td>
-                    </tr>
-                `;
+                    </tr>`;
             });
-
             document.getElementById('kpi_ca').innerText = fmt(sumCA);
             document.getElementById('kpi_pa').innerText = fmt(sumPA);
             document.getElementById('kpi_invest').innerText = fmt(sumInvest);
         }
 
-        ['statut', 'salaire-brut', 'ca', 'matos', 'culture', 'tr', 'tr-montant', 'km', 'cv', 'pee-volontaire', 'parts', 'frais-type', 'frais-val'].forEach(id => {
-            document.getElementById(id).addEventListener('input', calculer);
+        // --- SYNCHRONISATION BIDIRECTIONNELLE DES CHAMPS ET CURSEURS ---
+        document.addEventListener("DOMContentLoaded", () => {
+            const syncInputs = (id) => {
+                const range = document.getElementById(id);
+                const input = document.getElementById(id + '_input');
+                if (range && input) {
+                    range.addEventListener('input', () => { input.value = range.value; calculer(); });
+                    input.addEventListener('input', () => { range.value = input.value; calculer(); });
+                }
+            };
+            
+            ['salaire-brut', 'ca', 'matos', 'culture', 'tr', 'tr-montant', 'km', 'pee-volontaire', 'frais-val'].forEach(syncInputs);
+            ['statut', 'cv', 'parts', 'frais-type'].forEach(id => {
+                document.getElementById(id).addEventListener('change', calculer);
+            });
+            calculer();
         });
-        calculer();
     </script>
 </body>
 </html>
